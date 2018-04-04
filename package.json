@@ -2,6 +2,8 @@
   "name": "mon-app",
   "version": "0.1.0",
   "private": true,
+  "author": "prck",
+  "license": "ISC",
   "scripts": {
     "start": "node server.js",
     "serve": "vue-cli-service serve",
@@ -16,7 +18,9 @@
   "dependencies": {
     "express": "^4.16.2",
     "vue": "^2.5.13",
+    "vue-material": "^1.0.0-beta-8",
     "vue-router": "^3.0.1",
+    "vuetify": "^1.0.12",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
