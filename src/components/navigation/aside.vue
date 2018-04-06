@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.lgAndUp" :mini-variant.sync="mini" app v-model="drawer">
+    <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.lgAndUp" app v-model="drawer">
       <v-list dense>
         <template v-for="item in items">
           <v-layout row v-if="item.heading" align-center :key="item.heading">
@@ -53,44 +53,44 @@ export default {
   data: () => {
     return {
       items: [
-        { icon: 'contacts', text: 'Contacts' },
-        { icon: 'history', text: 'Frequently contacted' },
-        { icon: 'content_copy', text: 'Duplicates' },
+        { icon: "contacts", text: "Contacts" },
+        { icon: "history", text: "Frequently contacted" },
+        { icon: "content_copy", text: "Duplicates" },
         {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'Labels',
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "Labels",
           model: true,
-          children: [{ icon: 'add', text: 'Create label' }]
+          children: [{ icon: "add", text: "Create label" }]
         },
         {
-          icon: 'keyboard_arrow_up',
-          'icon-alt': 'keyboard_arrow_down',
-          text: 'More',
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "More",
           model: false,
           children: [
-            { text: 'Import' },
-            { text: 'Export' },
-            { text: 'Print' },
-            { text: 'Undo changes' },
-            { text: 'Other contacts' }
+            { text: "Import" },
+            { text: "Export" },
+            { text: "Print" },
+            { text: "Undo changes" },
+            { text: "Other contacts" }
           ]
         },
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'chat_bubble', text: 'Send feedback' },
-        { icon: 'help', text: 'Help' },
-        { icon: 'phonelink', text: 'App downloads' },
-        { icon: 'keyboard', text: 'Go to the old version' }
+        { icon: "settings", text: "Settings" },
+        { icon: "chat_bubble", text: "Send feedback" },
+        { icon: "help", text: "Help" },
+        { icon: "phonelink", text: "App downloads" },
+        { icon: "keyboard", text: "Go to the old version" }
       ]
-    }
+    };
   },
   props: {
     drawer: Boolean
   },
   methods: {
-    mini: function () {
-      return !this.drawer
+    mini: function() {
+      return !this.drawer;
     }
   }
-}
+};
 </script>
