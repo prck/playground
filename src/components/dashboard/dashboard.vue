@@ -1,31 +1,24 @@
 <template>
-  <div id="dashboard">
-    <h1>That's the dashboard!</h1>
-    <p>You should only get here if you're authenticated!</p>
-    <p>Your Email Address : {{ email }}</p>
+  <div>
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout justify-center align-center>
+          <v-tooltip right>
+            <v-btn icon large target="_blank" slot="activator">
+              <v-icon large>code</v-icon>
+            </v-btn>
+            <span>Source</span>
+          </v-tooltip>
+        </v-layout>
+      </v-container>
+    </v-content>
+    <v-btn fab bottom right color="pink" dark fixed @click.stop="dialog = !dialog">
+      <v-icon>add</v-icon>
+    </v-btn>
   </div>
 </template>
+
+
 <script>
-// import axios from "axios";
-export default {
-  computed: {
-    email () {
-      return !this.$store.getters.user ? false : this.$store.getters.user.email
-    }
-  },
-  created () {
-    this.$store.dispatch('fetchUser')
-  }
-}
+export default {};
 </script>
-
-<style scoped>
-h1,
-p {
-  text-align: center;
-}
-
-p {
-  color: red;
-}
-</style>
