@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
     <v-app light>
       <v-toolbar class="white">
-        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-toolbar-title v-text="title" />
       </v-toolbar>
       <v-content>
         <section>

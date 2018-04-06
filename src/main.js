@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import { store } from './store/store'
+import VueRouter from 'vue-router'
+// import VueResource from 'vue-resource'
 import Vuetify from 'vuetify'
+
+import { routes } from './routes'
+import { store } from './store/store'
 import 'vuetify/dist/vuetify.css'
 
 import VueMaterial from 'vue-material'
@@ -12,6 +15,12 @@ Vue.config.productionTip = false
 
 Vue.use(VueMaterial)
 Vue.use(Vuetify)
+Vue.use(VueRouter);
+const router = new VueRouter({
+  routes,
+  mode: 'history',
+})
+
 new Vue({
   router,
   store,

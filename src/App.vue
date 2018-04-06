@@ -1,12 +1,12 @@
 <template>
   <v-app id="app">
-    <app-header></app-header>
-    <app-dashboard></app-dashboard>
+    <app-header/>
+    <app-dashboard/>
   </v-app>
 </template>
 
 <script>
-import header from "./components/navigation/header.vue";
+import header from "./components/layout/header.vue";
 import dashboard from "./components/dashboard/dashboard.vue";
 export default {
   components: {
