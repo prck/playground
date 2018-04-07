@@ -1,24 +1,18 @@
 <template>
-  <v-app id="app">
-    <app-header/>
-    <app-dashboard/>
+  <v-app id="inspire">
+    <router-view name="header-top" />
+    <v-content>
+      <transition name="slide" mode="out-in">
+        <router-view/>
+      </transition>
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import header from "./components/layout/header.vue";
-import dashboard from "./components/dashboard/dashboard.vue";
 export default {
-  components: {
-    "app-header": header,
-    "app-dashboard": dashboard
-  },
-  data: () => {
-    return {
-      dialog: false
-    };
-  },
   created() {
+    this.$store.dispatch("getBoard");
     this.$store.dispatch("getBoards");
   }
 };

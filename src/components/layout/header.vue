@@ -1,13 +1,13 @@
 <template>
   <div>
-    <app-aside :drawer="drawer"></app-aside>
-    <v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.lgAndUp" fixed>
+    <app-aside :drawer="drawer" />
+    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" fixed app dark>
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer" />
         <span class="hidden-sm-and-down">Kanban</span>
       </v-toolbar-title>
       <!-- <v-text-field flat solo-inverted prepend-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field> -->
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn icon>
         <v-icon>apps</v-icon>
       </v-btn>
@@ -24,15 +24,15 @@
 </template>
 
 <script>
-import aside from "./aside.vue";
+import aside from "./Aside.vue";
 export default {
-  data: () => {
-    return {
-      drawer: true
-    };
-  },
   components: {
     "app-aside": aside
+  },
+  data: () => {
+    return {
+      drawer: false
+    };
   }
 };
 </script>
