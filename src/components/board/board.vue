@@ -16,9 +16,11 @@
 <script>
 import list from "./List.vue";
 import { mapGetters } from "vuex";
+import draggable from "vuedraggable";
 export default {
   components: {
-    "app-list": list
+    "app-list": list,
+    draggable
   },
   computed: {
     currentBoard() {
