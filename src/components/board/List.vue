@@ -3,7 +3,6 @@
     <v-card class="ma-1 pa-1" style="min-height:600px;">
       <div>
         <h3 class=" headline ">{{ list.name }}</h3>
-        <div>{{ list.text }}</div>
         <draggable style="min-height:600px; background-color:green display:flex" :options="{group: 'card'} " @add="moveCard" @update="moveCard" :id="list.id">
           <app-card v-for="card in list.cards " :key="card.id " :card="card " />
         </draggable>
@@ -29,8 +28,9 @@ export default {
   },
   methods: {
     moveCard: function(event) {
+      console.log("moveCard @list");
       const order = {
-        previousListId: event.from.parentElement.id,
+        previousListId: event.from.id || event.from.parentElement.id,
         cardId: event.item.id,
         listId: event.to.id,
         index: event.newIndex

@@ -34,7 +34,7 @@ const actions = {
   },
   getBoard({ commit, state }) {
     apiKanban
-      .get("/boards/qrcamra")
+      .get("/boards/jxe66xg")
       .then(res => {
         commit('SET_BOARD', res.data.board)
       })

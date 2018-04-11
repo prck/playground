@@ -1,11 +1,11 @@
 <template>
-  <draggable :options="{group: { name:'card'}}">
-    <v-card class="ml-6 mt-1 pa-2" color="blue-grey darken-2" :id="card.id">
+  <draggable :options="{group: { name:'card'}}" @add="moveCard" @update="moveCard">
+    <v-card class="ml-6 mt-1 pa-2" color="darken-2" :id="card.id">
       <v-card-title primary-title>
-        <div>
+        <v-flex>
           <h3 class="headline mb-0">{{ card.name }}</h3>
-          <div>{{ card.text }}</div>
-        </div>
+          <v-text-field name="input-1" v-model="card.text" textarea/>
+        </v-flex>
       </v-card-title>
     </v-card>
   </draggable>
@@ -22,6 +22,18 @@ export default {
       type: Object,
       default: () => {},
       require: true
+    }
+  },
+  methods: {
+    moveCard: function(event) {
+      console.log("moveCard @card", event);
+      const order = {
+        previousListId: event.from.id || event.from.parentElement.id,
+        cardId: event.item.id,
+        listId: event.to.id,
+        index: event.newIndex
+      };
+      // this.$store.dispatch("moveCard", order);
     }
   }
 };
