@@ -1,6 +1,6 @@
 <template>
   <draggable :options="{group: { name:'card'}}">
-    <v-card class="ml-6 mt-1 pa-2" color="blue-grey darken-2" :id="card._id">
+    <v-card class="ml-6 mt-1 pa-2" color="blue-grey darken-2" :id="card.id">
       <v-card-title primary-title>
         <div>
           <h3 class="headline mb-0">{{ card.name }}</h3>

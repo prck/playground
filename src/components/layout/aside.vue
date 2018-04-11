@@ -3,7 +3,7 @@
     <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" app fixed>
       <v-list dense>
         <template v-for="board in boards">
-          <v-list-tile @click="" :key="board._id">
+          <v-list-tile @click="" :key="board.id">
             <v-list-tile-action>
               <v-icon>airplay</v-icon>
             </v-list-tile-action>
@@ -17,7 +17,7 @@
       </v-list>
     </v-navigation-drawer>
   </div>
-</template>
+</template> 
 
 <script>
 import { mapGetters } from "vuex";

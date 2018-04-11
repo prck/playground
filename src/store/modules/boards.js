@@ -24,7 +24,7 @@ const mutations = {
 }
 
 const actions = {
-  getBoards({ commit, state }) {
+  getBoards({ commit }) {
     apiKanban
       .get("/boards")
       .then(res => {
@@ -34,7 +34,7 @@ const actions = {
   },
   getBoard({ commit, state }) {
     apiKanban
-      .get("/boards/5ac88d0cebd3812cdca34ed3")
+      .get("/boards/qrcamra")
       .then(res => {
         commit('SET_BOARD', res.data.board)
       })

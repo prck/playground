@@ -4,8 +4,8 @@
       <div>
         <h3 class=" headline ">{{ list.name }}</h3>
         <div>{{ list.text }}</div>
-        <draggable style="min-height:600px; background-color:green display:flex" :options="{group: 'card'} " @add="newCard" @update="changeCard" :id="list._id">
-          <app-card v-for="card in list.cards " :key="card._id " :card="card " />
+        <draggable style="min-height:600px; background-color:green display:flex" :options="{group: 'card'} " @add="moveCard" @update="moveCard" :id="list.id">
+          <app-card v-for="card in list.cards " :key="card.id " :card="card " />
         </draggable>
       </div>
     </v-card>
@@ -28,17 +28,14 @@ export default {
     }
   },
   methods: {
-    newCard: function(event) {
-      console.log("newCard: idCard", event.item.id);
-      console.log("newCard: idList", event.to.id);
-      console.log("newCard: newIndex", event.newIndex);
-      console.log("newCard: oldIndex", event.oldIndex);
-    },
-    changeCard: function(event) {
-      console.log("changeCard: idCard", event.item.id);
-      console.log("changeCard: idList", event.to.id);
-      console.log("changeCard: newIndex", event.newIndex);
-      console.log("changeCard: oldIndex", event.oldIndex);
+    moveCard: function(event) {
+      const order = {
+        previousListId: event.from.parentElement.id,
+        cardId: event.item.id,
+        listId: event.to.id,
+        index: event.newIndex
+      };
+      this.$store.dispatch("moveCard", order);
     }
   }
 };
