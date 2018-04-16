@@ -1,12 +1,13 @@
 <template>
-  <v-app id="inspire">
-    <router-view name="header-top" />
-    <v-content>
+  <div>
+    <router-view name="header" />
+
+    <div class="container">
       <transition name="slide" mode="out-in">
         <router-view/>
       </transition>
-    </v-content>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -17,3 +18,4 @@ export default {
   }
 };
 </script>
+
