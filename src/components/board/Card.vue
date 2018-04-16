@@ -1,21 +1,22 @@
 <template>
-  <draggable :options="{group: { name:'card'}}">
-    <v-card class="ml-6 mt-1 pa-2" color="blue-grey darken-2" :id="card.id">
-      <v-card-title primary-title>
-        <div>
-          <h3 class="headline mb-0">{{ card.name }}</h3>
-          <div>{{ card.text }}</div>
-        </div>
-      </v-card-title>
-    </v-card>
-  </draggable>
+  <div class="card task-lane-item">
+    <div class="card-block">
+      <div v-if="!editedCard">
+        <label @dblclick="editCard(card)">{{ card.text }}</label>
+      </div>
+      <textarea v-card-focus="editedCard" v-else v-model="card.text" class="form-control" type="text" @blur="doneEdit(card)" @keyup.esc="cancelEdit(card)" />
+    </div>
+  </div>
 </template>
 
 <script>
-import draggable from "vuedraggable";
 export default {
-  components: {
-    draggable
+  directives: {
+    "card-focus": {
+      inserted: function(el) {
+        el.focus();
+      }
+    }
   },
   props: {
     card: {
@@ -23,7 +24,34 @@ export default {
       default: () => {},
       require: true
     }
+  },
+  data: function() {
+    return {
+      editedCard: false
+    };
+  },
+  methods: {
+    editCard: function(card) {
+      this.beforeEditCache = card.text;
+      this.editedCard = true;
+    },
+    doneEdit: function(card) {
+      if (!this.editedCard) {
+        return;
+      }
+      this.editedCard = false;
+      this.$store.dispatch("saveCard", { text: card.text, id: card.id });
+    },
+    cancelEdit: function(card) {
+      this.editedCard = null;
+      card.text = this.beforeEditCache;
+    }
   }
 };
 </script>
+
+<style scoped>
+
+</style>
+
 
