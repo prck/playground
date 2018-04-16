@@ -1,20 +1,25 @@
 <template>
-  <v-flex d-flex md12 lg3>
-    <v-card class="ma-1 pa-1" style="min-height:600px;">
-      <div>
-        <h3 class=" headline ">{{ list.name }}</h3>
-        <div>{{ list.text }}</div>
-        <draggable style="min-height:600px; background-color:green display:flex" :options="{group: 'card'} " @add="moveCard" @update="moveCard" :id="list.id">
-          <app-card v-for="card in list.cards " :key="card.id " :card="card " />
+  <div class="col-md">
+    <div class="card">
+      <h3 class="card-header">{{ list.name }}</h3>
+      <div class="card-body">
+        <draggable :id="list.id" :options="{ group: 'card' }" @end="moveCard">
+          <div :id="card.id" v-for="card in list.cards" :key="card.id">
+            <app-card :card="card" />
+          </div>
         </draggable>
       </div>
-    </v-card>
-  </v-flex>
+      <div class="card-footer text-muted">
+        {{ itemCount }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import card from "./Card.vue";
 import draggable from "vuedraggable";
+
 export default {
   components: {
     "app-card": card,
@@ -27,10 +32,17 @@ export default {
       require: true
     }
   },
+  computed: {
+    itemCount() {
+      if (!this.list.cards) return "";
+      if (this.list.cards.length === 1) return "1 task";
+      return `${this.list.cards.length} tasks`;
+    }
+  },
   methods: {
     moveCard: function(event) {
       const order = {
-        previousListId: event.from.parentElement.id,
+        previousListId: event.from.id,
         cardId: event.item.id,
         listId: event.to.id,
         index: event.newIndex
@@ -40,3 +52,8 @@ export default {
   }
 };
 </script>
+<style>
+.card-body > * {
+  min-height: 50px;
+}
+</style>
