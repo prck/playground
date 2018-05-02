@@ -1,15 +1,19 @@
 <template>
-  <div class="card task-lane-item">
+  <div class="card task-lane-item" @dblclick="editCard(card)">
     <div class="card-block">
       <div v-if="!editedCard">
-        <label @dblclick="editCard(card)">{{ card.text }}</label>
+        <div v-html="compiledMarkdown" />
+        <!-- <label @dblclick="editCard(card) ">{{ card.text }}</label> -->
       </div>
-      <textarea v-card-focus="editedCard" v-else v-model="card.text" class="form-control" type="text" @blur="doneEdit(card)" @keyup.esc="cancelEdit(card)" />
+      <textarea v-card-focus="editedCard " v-else v-model="card.text " class="form-control " type="text " @blur="doneEdit(card) " @keyup.esc="cancelEdit(card) " />
     </div>
+  </div>
   </div>
 </template>
 
 <script>
+import marked from "marked";
+
 export default {
   directives: {
     "card-focus": {
@@ -29,6 +33,11 @@ export default {
     return {
       editedCard: false
     };
+  },
+  computed: {
+    compiledMarkdown: function() {
+      return marked(this.card.text, { sanitize: true });
+    }
   },
   methods: {
     editCard: function(card) {
@@ -51,7 +60,9 @@ export default {
 </script>
 
 <style scoped>
-
+.card {
+  min-height: 50px;
+}
 </style>
 
 
