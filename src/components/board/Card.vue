@@ -8,7 +8,6 @@
       <textarea v-card-focus="editedCard " v-else v-model="card.text " class="form-control " type="text " @blur="doneEdit(card) " @keyup.esc="cancelEdit(card) " />
     </div>
   </div>
-  </div>
 </template>
 
 <script>
