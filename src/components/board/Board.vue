@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="page-header">
-      <h1>{{ currentBoard.name }}</h1>
-      <p class="lead">{{ currentBoard.text }}</p>
+      <h1 v-if="!currentlyEdited" @dblclick="edition(currentBoard.name)">{{ currentBoard.name }}</h1>
+      <input v-edition-focus="currentlyEdited " v-else v-model="currentBoard.name " class="form-control " type="text " @blur="validatedEdition(currentBoard) " @keyup.esc="canceledEdition() ">
     </div>
     <div class="board">
       <div class="row">
@@ -13,14 +13,15 @@
 </template>
 
 
-
 <script>
 import list from "./List.vue";
+import edition from "../../mixin/edition";
 import { mapGetters } from "vuex";
 export default {
   components: {
     "app-list": list
   },
+  mixins: [edition],
   computed: {
     currentBoard() {
       return this.$store.getters.currentBoard;

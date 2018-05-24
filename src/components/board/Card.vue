@@ -12,7 +12,7 @@
 
 <script>
 import marked from "marked";
-
+import edition from "../../mixin/edition";
 export default {
   directives: {
     "card-focus": {
@@ -21,17 +21,13 @@ export default {
       }
     }
   },
+  mixins: [edition],
   props: {
     card: {
       type: Object,
       default: () => {},
       require: true
     }
-  },
-  data: function() {
-    return {
-      editedCard: false
-    };
   },
   computed: {
     compiledMarkdown: function() {

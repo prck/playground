@@ -1,11 +1,11 @@
 <template>
   <div class="col-md">
     <div class="card">
-      <h3 v-if="!editedList" class="card-header">
-        <span @dblclick="editList(list)">{{ list.name }}</span>
+      <h3 v-if="!currentlyEdited" class="card-header">
+        <span @dblclick="edition(list.name)">{{ list.name }}</span>
         <i class=" fas fa-plus float-right " data-toggle="modal " data-target="#exampleModal " />
       </h3>
-      <input v-list-focus="editedList " v-else v-model="list.name " class="form-control " type="text " @blur="doneEdit(list) " @keyup.esc="cancelEdit(list) ">
+      <input v-list-focus="currentlyEdited " v-else v-model="list.name " class="form-control " type="text " @blur="validatedEdition(list) " @keyup.esc="canceledEdition() ">
       <div class="card-body ">
         <draggable :id="list.id " :options="{ group: 'card' } " @end="moveCard ">
           <div :id="card.id " v-for="card in list.cards " :key="card.id ">
@@ -46,6 +46,7 @@
 <script>
 import card from "./Card.vue";
 import draggable from "vuedraggable";
+import edition from "../../mixin/edition";
 
 export default {
   directives: {
@@ -59,18 +60,13 @@ export default {
     "app-card": card,
     draggable
   },
+  mixins: [edition],
   props: {
     list: {
       type: Object,
       default: () => {},
       require: true
     }
-  },
-  data: function() {
-    return {
-      newText: "",
-      editedList: false
-    };
   },
   computed: {
     itemCount() {
@@ -96,21 +92,6 @@ export default {
       };
       this.newText = "";
       this.$store.dispatch("addCard", order);
-    },
-    editList: function(list) {
-      this.beforeEditCache = list.name;
-      this.editedList = true;
-    },
-    doneEdit: function(list) {
-      if (!this.editedList) {
-        return;
-      }
-      this.editedList = false;
-      this.$store.dispatch("saveList", { name: list.name, id: list.id });
-    },
-    cancelEdit: function(list) {
-      this.editedList = false;
-      list.name = this.beforeEditCache;
     }
   }
 };
