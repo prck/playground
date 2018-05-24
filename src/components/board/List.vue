@@ -2,13 +2,13 @@
   <div class="col-md">
     <div class="card">
       <h3 v-if="!currentlyEdited" class="card-header">
-        <span @dblclick="edition(list.name)">{{ list.name }}</span>
-        <i class=" fas fa-plus float-right " data-toggle="modal " data-target="#exampleModal " />
+        <i class="fas fa-plus float-right" data-toggle="modal" data-target="#addCardModal" />
+        <span @dblclick="edition(list.text)">{{ list.text }}</span>
       </h3>
-      <input v-list-focus="currentlyEdited " v-else v-model="list.name " class="form-control " type="text " @blur="validatedEdition(list) " @keyup.esc="canceledEdition() ">
+      <input v-edition-focus="currentlyEdited " v-else v-model="list.text " class="form-control " type="text " @blur="validatedEdition(list, list.id, 'saveList') " @keyup.esc="canceledEdition() ">
       <div class="card-body ">
         <draggable :id="list.id " :options="{ group: 'card' } " @end="moveCard ">
-          <div :id="card.id " v-for="card in list.cards " :key="card.id ">
+          <div v-for="card in list.cards " :key="card.id " :id="card.id ">
             <app-card :card="card " />
           </div>
         </draggable>
@@ -17,25 +17,25 @@
         {{ itemCount }}
       </div>
     </div>
-    <div class="modal fade " id="exampleModal " tabindex="-1 " role="dialog " aria-labelledby="exampleModalLabel " aria-hidden="true ">
-      <div class="modal-dialog " role="document ">
-        <div class="modal-content ">
-          <div class="modal-header ">
-            <h5 class="modal-title " id="exampleModalLabel ">New card</h5>
-            <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-              <span aria-hidden="true ">&times;</span>
+    <div class="modal fade" id="addCardModal" tabindex="-1" role="dialog" aria-labelledby="addCardModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addCardModalLabel">New card</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body ">
+          <div class="modal-body">
             <form>
-              <div class="form-group ">
-                <label for="message-text " class="col-form-label ">Message:</label>
-                <textarea id="message-text " v-model="newText " class="form-control " />
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea id="message-text" v-model="newText" class="form-control" />
               </div>
             </form>
           </div>
-          <div class="modal-footer ">
-            <button type="button " class="btn btn-primary " @click="addCard ">Create</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="addCard">Create</button>
           </div>
         </div>
       </div>
@@ -47,15 +47,7 @@
 import card from "./Card.vue";
 import draggable from "vuedraggable";
 import edition from "../../mixin/edition";
-
 export default {
-  directives: {
-    "list-focus": {
-      inserted: function(el) {
-        el.focus();
-      }
-    }
-  },
   components: {
     "app-card": card,
     draggable
@@ -67,6 +59,11 @@ export default {
       default: () => {},
       require: true
     }
+  },
+  data: function() {
+    return {
+      newText: ""
+    };
   },
   computed: {
     itemCount() {
@@ -85,7 +82,7 @@ export default {
       };
       this.$store.dispatch("moveCard", order);
     },
-    addCard: function(event) {
+    addCard: function() {
       const order = {
         listId: this.list.id,
         text: this.newText

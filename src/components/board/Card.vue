@@ -1,18 +1,17 @@
 <template>
-  <div class="card task-lane-item" @dblclick="editCard(card)">
+  <div class="card task-lane-item" @dblclick="edition(card.text)">
     <div class="card-block">
-      <div v-if="!editedCard">
+      <div v-if="!currentlyEdited">
         <div v-html="compiledMarkdown" />
-        <!-- <label @dblclick="editCard(card) ">{{ card.text }}</label> -->
       </div>
-      <textarea v-card-focus="editedCard " v-else v-model="card.text " class="form-control " type="text " @blur="doneEdit(card) " @keyup.esc="cancelEdit(card) " />
+      <textarea v-edition-focus="currentlyEdited " v-else v-model="card.text " class="form-control " type="text " @blur="validatedEdition(card.id, card.text, 'saveCard') " @keyup.esc="canceledEdition() " />
     </div>
   </div>
-</template>
-
+</template>          
+     
 <script>
-import marked from "marked";
 import edition from "../../mixin/edition";
+import marked from "marked";
 export default {
   directives: {
     "card-focus": {
@@ -31,24 +30,8 @@ export default {
   },
   computed: {
     compiledMarkdown: function() {
-      return marked(this.card.text, { sanitize: true });
-    }
-  },
-  methods: {
-    editCard: function(card) {
-      this.beforeEditCache = card.text;
-      this.editedCard = true;
-    },
-    doneEdit: function(card) {
-      if (!this.editedCard) {
-        return;
-      }
-      this.editedCard = false;
-      this.$store.dispatch("saveCard", { text: card.text, id: card.id });
-    },
-    cancelEdit: function(card) {
-      this.editedCard = null;
-      card.text = this.beforeEditCache;
+      let text = this.card.text || "";
+      return marked(text, { sanitize: true });
     }
   }
 };
