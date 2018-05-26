@@ -2,10 +2,10 @@
   <div class="col-md">
     <div class="card">
       <h3 v-if="!currentlyEdited" class="card-header">
-        <i class="fas fa-plus float-right" data-toggle="modal" data-target="#addCardModal" />
+        <i v-if="index===0" class="fas fa-plus float-right" data-toggle="modal" data-target="#addCardModal" />
         <span @dblclick="edition(list.text)">{{ list.text }}</span>
       </h3>
-      <input v-edition-focus="currentlyEdited " v-else v-model="list.text " class="form-control " type="text " @blur="validatedEdition(list, list.id, 'saveList') " @keyup.esc="canceledEdition() ">
+      <input v-edition-focus="currentlyEdited " v-else v-model="list.text " class="form-control " type="text " @blur="validatedEdition(list.id, list.text, 'saveList') " @keyup.esc="canceledEdition() ">
       <div class="card-body ">
         <draggable :id="list.id " :options="{ group: 'card' } " @end="moveCard ">
           <div v-for="card in list.cards " :key="card.id " :id="card.id ">
@@ -20,17 +20,11 @@
     <div class="modal fade" id="addCardModal" tabindex="-1" role="dialog" aria-labelledby="addCardModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addCardModalLabel">New card</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
             <form>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Message:</label>
-                <textarea id="message-text" v-model="newText" class="form-control" />
+                <textarea id="message-text" v-model="newText" class="form-control" @keyup.alt.enter="addCard" />
               </div>
             </form>
           </div>
@@ -58,6 +52,10 @@ export default {
       type: Object,
       default: () => {},
       require: true
+    },
+    index: {
+      type: Number,
+      default: () => 0
     }
   },
   data: function() {
@@ -83,12 +81,15 @@ export default {
       this.$store.dispatch("moveCard", order);
     },
     addCard: function() {
+      console.log(this.list.cards);
+      console.log(this.list.text);
       const order = {
         listId: this.list.id,
         text: this.newText
       };
+      console.log(order);
       this.newText = "";
-      this.$store.dispatch("addCard", order);
+      // this.$store.dispatch("addCard", order);
     }
   }
 };

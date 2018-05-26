@@ -43,7 +43,21 @@ const mutations = {
     list.cards.push(card)
     console.log(order);
     console.log(card);
-  }
+  },
+  'SAVE_LIST' (state, { order, card }) {
+    console.log(order);
+    console.log(card);
+  },
+  'ADD_LIST' (state, { order, card }) {
+    const list = state.currentBoard.find(list => list.id === order.listId)
+    list.cards.push(card)
+    console.log(order);
+    console.log(card);
+  },
+  'SAVE_BOARD' (state, { order, card }) {
+    console.log(order);
+    console.log(card);
+  },
 }
 
 const actions = {
@@ -57,7 +71,8 @@ const actions = {
   },
   getBoard({ commit }) {
     apiKanban
-      .get("/boards/jxe66xg")
+      // .get("/boards/jxe66xg")
+      .get("/boards/y241vwm")
       .then(res => {
         commit('SET_BOARD', res.data.board)
       })
@@ -87,6 +102,34 @@ const actions = {
       .post("/cards/", order)
       .then(res => {
         commit('ADD_CARD', { order, card: res.data.card })
+      })
+      .catch(error => console.log(error))
+  },
+  saveList: ({ commit }, order) => {
+    const data = Object.entries(order).map(([propName, value]) => ({ propName, value }))
+    console.log(data);
+    apiKanban
+      .patch("/lists/" + order.id, data)
+      .then(res => {
+        commit('SAVE_LIST', { order, card: res.data.card })
+      })
+      .catch(error => console.log(error))
+  },
+  addList: ({ commit }, order) => {
+    apiKanban
+      .post("/lists/", order)
+      .then(res => {
+        commit('ADD_LIST', { order, card: res.data.card })
+      })
+      .catch(error => console.log(error))
+  },
+  saveBoard: ({ commit }, order) => {
+    const data = Object.entries(order).map(([propName, value]) => ({ propName, value }))
+    console.log(data);
+    apiKanban
+      .patch("/boards/" + order.id, data)
+      .then(res => {
+        commit('SAVE_BOARD', { order, card: res.data.card })
       })
       .catch(error => console.log(error))
   },
